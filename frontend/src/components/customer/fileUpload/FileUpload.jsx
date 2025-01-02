@@ -184,9 +184,8 @@ const FileUpload = () => {
             padding: '20px',
             backgroundColor: '#ffffff',
             borderRadius: '8px',
-            width: '600px',
+            width: '650px',
             textAlign: 'center',
-            margin: 'auto',
             mt: 5,
             '&:hover': {
               backgroundColor: '#e3f2fd68',
