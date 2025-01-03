@@ -13,10 +13,10 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import { useContext, useState } from 'react';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -72,8 +72,14 @@ export default function SignInCard() {
     dispatch({ type: 'LOGIN_START' });
 
     try {
-      const response = await axios.post('http://localhost:8070/api/customer/login', formData, { withCredentials: true });
-      dispatch({ type: 'LOGIN_SUCCESS', payload: response.data.user });
+      const response = await axiosInstance.post('/customer/login', formData, { withCredentials: true });
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user: response.data.user, // Replace with the actual user data from the API
+          token: response.data.token, // Replace with the token from the API
+        },
+      });
       alert(response.data.message);
       navigate('/');
     } catch (err) {

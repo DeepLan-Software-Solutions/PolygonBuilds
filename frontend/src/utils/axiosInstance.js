@@ -10,6 +10,37 @@ const axiosInstance = axios.create({
   },
 });
 
+// Optional: Add interceptors for request/response handling
+axiosInstance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem('token');
+    
+      if (!['/customer/login', '/customer/register'].includes(config.url)) {
+        if (token && token !== 'undefined' && token !== 'null') {
+          config.headers.Authorization = `Bearer ${token}`;
+        } else {
+          console.error('Invalid or missing token:', token);
+          throw new axios.Cancel('No valid access token found');
+        }
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  
+  
+  
 
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // Handle errors globally
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;

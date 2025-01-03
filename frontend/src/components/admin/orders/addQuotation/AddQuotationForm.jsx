@@ -59,7 +59,7 @@ function AddQuotationForm({ orderId }) {
           };
 
           try {
-            const response = axiosInstance.post(`/adminOrder/addQuotation/${orderId}`,
+            const response = await axiosInstance.post(`/adminOrder/addQuotation/${orderId}`,
               payload
             );
             setMessage('Quotation submitted successfully!');
