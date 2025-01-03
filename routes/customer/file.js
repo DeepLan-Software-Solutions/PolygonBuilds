@@ -1,5 +1,5 @@
 const express = require('express');
-const File = require('../../models/customer/File');
+const File = require('../../models/File');
 const router = express.Router();
 
 router.post('/saveFile', async (req, res) => {

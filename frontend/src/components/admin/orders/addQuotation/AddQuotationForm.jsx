@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, Typography, TextField, LinearProgress } from '@mui/material';
 import axios from 'axios';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import axiosInstance from '../../../../utils/axiosInstance';
 
 function AddQuotationForm({ orderId }) {
   const [file, setFile] = useState(null); // State for the uploaded file
@@ -58,8 +59,7 @@ function AddQuotationForm({ orderId }) {
           };
 
           try {
-            const response = await axios.post(
-              `http://localhost:8070/api/adminOrder/addQuotation/${orderId}`,
+            const response = axiosInstance.post(`/adminOrder/addQuotation/${orderId}`,
               payload
             );
             setMessage('Quotation submitted successfully!');

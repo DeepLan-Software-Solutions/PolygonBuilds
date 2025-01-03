@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import Orders from './order/orders/Orders'
 import FileUpload from './fileUpload/FileUpload'
 import ThreeDModel from './ModelRendering/3Dprinting/ThreeDModel'
+import UploadDashBoard from './fileUpload/UploadDashBoard'
 
 function CustomerUI() {
   return (
@@ -15,6 +16,7 @@ function CustomerUI() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/3dmodel/*" element={<ThreeDModel />} />
               <Route path="/orders" element={<Orders />} />
+              <Route path="/upload" element={<UploadDashBoard />} />
             </Routes>
       <Footer />
     </div>
