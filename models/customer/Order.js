@@ -69,7 +69,7 @@ const orderSchema = new mongoose.Schema({
         default: Date.now  // Automatically sets the order date to current date
     },
     status: {
-        type: String,  // Status of the order
+        type: String,  // Current status of the order
         default: "Quotation Pending"
     },
     quotation: {
@@ -85,7 +85,35 @@ const orderSchema = new mongoose.Schema({
             type: String, // Optional notes about the quotation
             required: false
         }
-    }
+    },
+    tracking: [
+        {
+            status: {
+                type: String, // Status of the order
+                enum: [
+                    "Order Created",
+                    "Quotation Sent",
+                    "Payment Pending",
+                    "To Pack",
+                    "Ready To Ship",
+                    "Shipping",
+                    "Delivered",
+                    "Failed Delivery",
+                    "Cancelled",
+                    "Rejected"
+                ],
+                required: true
+            },
+            timestamp: {
+                type: Date, // Timestamp for when the status was updated
+                default: Date.now
+            },
+            description: {
+                type: String, // Description or note about the status update
+                maxlength: 500
+            }
+        }
+    ]
 }, {
     timestamps: true  // Adds createdAt and updatedAt fields automatically
 });
