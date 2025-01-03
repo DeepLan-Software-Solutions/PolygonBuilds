@@ -45,7 +45,7 @@ router.post('/addQuotation/:id', async (req, res) => {
     const { fileUrl, specialNotes } = req.body; // Quotation details from the request body
 
     try {
-        // Find the order by ID and update it with the quotation
+        // Find the order by ID and update it with the quotation and tracking entry
         const updatedOrder = await Order.findByIdAndUpdate(
             id,
             {
@@ -56,6 +56,13 @@ router.post('/addQuotation/:id', async (req, res) => {
                         specialNotes
                     },
                     status: "Payment Pending"
+                },
+                $push: {
+                    tracking: {
+                        status: "Quotation Sent",
+                        timestamp: new Date(),
+                        description: "Quotation has been sent to the customer."
+                    }
                 }
             },
             { new: true } // Return the updated document
@@ -66,7 +73,7 @@ router.post('/addQuotation/:id', async (req, res) => {
         }
 
         res.status(200).json({
-            message: 'Quotation added successfully',
+            message: 'Quotation added successfully with tracking updated',
             order: updatedOrder
         });
     } catch (error) {
@@ -74,6 +81,7 @@ router.post('/addQuotation/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to add quotation', error });
     }
 });
+
 
 
 

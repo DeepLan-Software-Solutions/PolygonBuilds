@@ -91,7 +91,8 @@ const orderSchema = new mongoose.Schema({
             status: {
                 type: String, // Status of the order
                 enum: [
-                    "Quotation Pending",
+                    "Order Created",
+                    "Quotation Sent",
                     "Payment Pending",
                     "To Pack",
                     "Ready To Ship",

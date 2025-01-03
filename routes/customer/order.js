@@ -69,7 +69,13 @@ router.post('/create-multiple-orders', async (req, res) => {
                 cosmeticSide,
                 industryDescription,
                 hardnessDescription,
-                status: "Quotation Pending"  // New orders are 'active' by default
+                status: "Quotation Pending",  // New orders are 'active' by default
+                tracking: [
+                    {
+                        status: "Order Created",
+                        timestamp: new Date() // Current timestamp for tracking entry
+                    }
+                ]
             });
         });
 
@@ -77,7 +83,7 @@ router.post('/create-multiple-orders', async (req, res) => {
         const savedOrders = await Order.insertMany(orders);
 
         // After successfully creating orders, delete the cart items for the user
-        await Cart.deleteMany({ user_id, _id: { $in: cartItems.map(item => item._id) } });
+        // await Cart.deleteMany({ user_id, _id: { $in: cartItems.map(item => item._id) } });
 
         res.status(201).json({ message: 'Orders created successfully and cart items deleted.', orders: savedOrders });
     } catch (err) {
